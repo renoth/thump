@@ -1,0 +1,27 @@
+image: maven:3.3.9
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - maven
+        services:
+          - postgres
+        script: 
+          - mvn -B verify -P dev
+    - step: 
+        caches:
+          - maven
+        services:
+          - postgres
+        script: 
+          - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent test jacoco:report sonar:sonar -P dev
+
+definitions: 
+  services: 
+    postgres: 
+      image: postgres 
+      environment: 
+        POSTGRES_DB: 'thump' 
+        POSTGRES_USER: 'thump'
+        POSTGRES_PASSWORD: 'thump'
