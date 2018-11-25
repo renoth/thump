@@ -2,7 +2,7 @@
 <project version="4">
   <component name="SonarLintProjectSettings">
     <option name="bindingEnabled" value="true" />
-    <option name="projectKey" value="thump" />
+    <option name="projectKey" value="de.ninjo:thump" />
     <option name="serverId" value="SonarQube" />
   </component>
 </project>

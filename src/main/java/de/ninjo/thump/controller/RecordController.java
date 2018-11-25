@@ -13,9 +13,7 @@ import de.ninjo.thump.service.RecordServiceImpl;
 
 @RestController
 public class RecordController {
-
     private static final Logger LOG = LoggerFactory.getLogger(RecordController.class);
-
     private final RecordServiceImpl recordService;
 
     @Autowired
@@ -25,7 +23,9 @@ public class RecordController {
 
     @PostMapping(value = {"/log"}, consumes = {"application/json"})
     public ResponseEntity logRecord(@RequestBody Record record) {
-        LOG.debug("Received datapoint: " + record.toString());
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Received datapoint: {}", record);
+        }
 
         recordService.storeRecord(record);
 
