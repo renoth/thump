@@ -1,16 +1,34 @@
 package de.ninjo.thump.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import de.ninjo.thump.domain.Record;
+import de.ninjo.thump.service.RecordServiceImpl;
 
 @RestController
 public class RecordController {
 
-    @RequestMapping("/hello")
-    public ResponseEntity greeting(@RequestParam(value="name", defaultValue="World") String name) {
-        System.out.println("oke des wa ales.");
-        return ResponseEntity.ok("OKE");
+    private static final Logger LOG = LoggerFactory.getLogger(RecordController.class);
+
+    private final RecordServiceImpl recordService;
+
+    @Autowired
+    public RecordController(RecordServiceImpl recordService) {
+        this.recordService = recordService;
+    }
+
+    @PostMapping(value = {"/log"}, consumes = {"application/json"})
+    public ResponseEntity logRecord(@RequestBody Record record) {
+        LOG.debug("Received datapoint: " + record.toString());
+
+        recordService.storeRecord(record);
+
+        return ResponseEntity.ok("Logged");
     }
 }
