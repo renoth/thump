@@ -83,8 +83,63 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.3.0.603</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <sonar.host.url>http://213.136.94.164:9876</sonar.host.url>
+                <sonar.login>5ce7059a4282049633b1b42e24fe2e6673dd3634</sonar.login>
+                <sonar.junit.reportPaths>target/surefire-reports</sonar.junit.reportPaths>
+
+                <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+                <sonar.java.codeCoveragePlugin>jacoco</sonar.java.codeCoveragePlugin>
+
+                <sonar.jacoco.reportPaths>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPaths>
+                <sonar.language>java</sonar.language>
+                <sonar.binaries>target/classes</sonar.binaries>
+                <sonar.sources>src/main/java</sonar.sources>
+                <sonar.tests>src/test/java</sonar.tests>
+            </properties>
+            <build>
+                <directory>target</directory>
+            </build>
+        </profile>
+
+        <profile>
+            <id>prod</id>
+            <build>
+                <directory>target</directory>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
