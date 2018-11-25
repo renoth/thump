@@ -5,7 +5,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
     properties:
       hibernate.temp.use_jdbc_metadata_defaults: false
-      hibernate.format_sql : true
+      hibernate.format_sql: true
       hibernate.type: info
   datasource:
     url: jdbc:postgresql://localhost:5432/thump
@@ -23,3 +23,5 @@ logging.level:
 # my maven properties
 
 server.port: 1985
+
+sonar.host.url: http://213.136.94.164:9876
