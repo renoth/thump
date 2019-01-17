@@ -23,9 +23,7 @@ public class RecordController {
 
     @PostMapping(value = {"/log"}, consumes = {"application/json"})
     public ResponseEntity logRecord(@RequestBody Record record) {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Received datapoint: {}", record);
-        }
+        LOG.info("Received datapoint: {}", record);
 
         recordService.storeRecord(record);
 
