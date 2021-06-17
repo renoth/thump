@@ -3,10 +3,8 @@ package de.ninjo.thump.domain;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 public class Record {
@@ -14,8 +12,12 @@ public class Record {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private LocalDateTime timestamp;
+    @NotBlank(message = "deviceId must be present")
     private String deviceId;
+    @NotNull
     private BigDecimal temperature;
+    @DecimalMin(value = "0")
+    @DecimalMax(value = "100")
     private BigDecimal humidity;
 
     public Record(String deviceId, BigDecimal temperature, BigDecimal humidity) {
