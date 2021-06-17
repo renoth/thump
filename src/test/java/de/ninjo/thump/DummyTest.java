@@ -47,4 +47,13 @@ public class DummyTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string(containsString("{\"temperature\":\"must not be null\"}")));
     }
+
+    @Test
+    void whenPostLog_DataIncomplete2_returnBadRequest() throws Exception {
+        String json = getRecordJson(BigDecimal.ONE, "1", new BigDecimal(1000));
+
+        mockMvc.perform(post("/log").contentType(MediaType.APPLICATION_JSON).content(json))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string(containsString("\"humidity\":\"must be less than or equal to 100\"")));
+    }
 }
